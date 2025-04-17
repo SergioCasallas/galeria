@@ -11,3 +11,4 @@ Currently, two official plugins are available:
 
 If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 # galeria
+La intencion principal esta usar la libreria swapy en este proyecto, me parece una libreria bastante atractiva y facil de usar

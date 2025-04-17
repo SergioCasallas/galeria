@@ -1,35 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useRef } from "react";
+import { createSwapy } from "swapy";
+import "./App.css";
+import { dummy } from "./assets/dummyImages";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const swapy = useRef(null);
+  const container = useRef(null);
+
+  useEffect(() => {
+    if (container.current) {
+      swapy.current = createSwapy(container.current);
+
+      swapy.current.onSwap((event) => {
+        console.log("swap", event);
+      });
+    }
+
+    return () => {
+      swapy.current?.destroy();
+    };
+  }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <h1>Galeria</h1>
+      <div className="gallery" ref={container} role="list">
+        {dummy.map((image) => (
+          <div className="slot" key={image.id} data-swapy-slot={image.id}>
+            <div className="user" key={image.id} data-swapy-item={image.id}>
+              <figure className="gallery__item" key={image.id} role="listitem">
+                <img
+                  src={image.imagen}
+                  alt={image.titulo}
+                  className="gallery__image"
+                  loading="lazy"
+                />
+                <figcaption className="gallery__caption">
+                  {image.titulo}
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
